@@ -44,15 +44,7 @@ const API_ARCHIVED = {
   truck: 'https://bid.cars/app/search/archived/toolbar-type/truck',
 };
 
-const getSearchResult = debounce((query, lang) => {
-  const api = activeFilters.archived ? API_ARCHIVED : API;
-  $.get(api.search(lang, query), (data) => {
-    const { results, url = '' } = JSON.parse(data);
-    $('#show-btn').text(`Show ${results} vehicles`);
-    activeFilters.searchResult = url;
-    $('#show-btn').prop('disabled', false);
-  });
-}, 500);
+
 
 let notArchivedData = {};
 let data = {};
@@ -69,6 +61,16 @@ let activeFilters = {
   archived: false,
   searchResult: '',
 };
+
+const getSearchResult = debounce((query, lang) => {
+  const api = activeFilters.archived ? API_ARCHIVED : API;
+  $.get(api.search(lang, query), (data) => {
+    const { results, url = '' } = JSON.parse(data);
+    $('#show-btn').text(`Show ${results} vehicles`);
+    activeFilters.searchResult = url;
+    $('#show-btn').prop('disabled', false);
+  });
+}, 500);
 
 function withEmptyOption(options, text = '', all = '') {
   options = options.filter((o) => o.text !== all);
@@ -242,6 +244,11 @@ $('#archived').on('input', ({ target: { checked } }) => {
       resetFormValues();
     }
   }
+
+  if (isValidSearchQuery(activeFilters.search)) {
+    getSearchResult(activeFilters.search, LANG);
+  }
+
   showResults(activeFilters);
 });
 
@@ -351,7 +358,11 @@ function getSearchResultCount({ make, model, from, to, copart, iaai }) {
 }
 
 function showResults(filters) {
-  if (filters.archived || filters.search) {
+  if (filters.search) {
+    return;
+  }
+
+  if (filters.archived) {
     $('#show-btn').text('Show vehicles');
     return;
   }
