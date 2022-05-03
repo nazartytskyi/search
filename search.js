@@ -354,7 +354,7 @@ $('#show-btn').click((e) => {
 
   if (search) {
     const url = searchResult || api.searchResult(search);
-    window.open(activeFilters.searchResult, '_blanc');
+    window.open(url, '_blanc');
 
     return false;
   }
