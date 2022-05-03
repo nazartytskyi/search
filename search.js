@@ -89,8 +89,8 @@ $(document).ready(function () {
   $('#make').select2();
   $('#model').select2();
   $('#generation').select2();
-  $('#from').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), 'From') });
-  $('#to').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), 'To') });
+  $('#from').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), '', 'From') });
+  $('#to').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), '', 'To') });
   $.get(API.automobile, onLoad);
 });
 
@@ -170,7 +170,11 @@ $('#model').on('select2:select', ({ target: { value } }) => {
   activeFilters.generation = '';
   $('#generation').select2({
     minimumResultsForSearch: -1,
-    templateResult: ({ text, maxYear, minYear }) => `${text} ${minYear && maxYear ? `(${minYear} - ${maxYear})` : ''}`,
+    escapeMarkup: function (markup) {
+      return markup;
+    },
+    templateResult: ({ text, maxYear, minYear }) =>
+      `${text} ${minYear && maxYear ? `<span>(${minYear} - ${maxYear})</span>` : ''}`,
     data: withEmptyOption(generationsData, 'Generation', 'All generations'),
   });
   showResults(activeFilters);
