@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <title>Search</title>
+</head>
+
+<body>
+    <div class="search-wrapper">
+        <form action="#">
+            <div class="nav">
+                <label>
+                    Automobile
+                    <input type="radio" checked name="vehicle-type" value="automobile">
+                </label>
+                <label>
+                    ATV
+                    <input type="radio" name="vehicle-type" value="atv">
+                </label>
+            </div>
+            <label>
+                Make
+                <select name="make" id="make">
+
+                </select>
+            </label>
+
+            <label>
+                Model
+                <select placeholder="Model" name="model" id="model"></select>
+            </label>
+
+            <label>
+                Generation
+                <select name="generation" id="generation"></select>
+            </label>
+
+            <div class="years-wrapper">
+                <label>
+                    From
+                    <select name="from" id="from"></select>
+                </label>
+
+                <label>
+                    To
+                    <select name="to" id="to"></select>
+                </label>
+            </div>
+            <label>
+                VIN
+                <input id="search" type="text" name="vin">
+            </label>
+
+            <div class="checkbox-group">
+                Show results from:
+                <label>
+                    <span>IAAI</span>
+                    <input id="iaai" type="checkbox" checked name="iaai">
+                </label>
+                <label>
+                    <span>Copart</span>
+                    <input id="copart" type="checkbox" checked name="copart">
+                </label>
+            </div>
+            <label>
+                <span>Archived</span>
+                <input id="archived" type="checkbox" name="archived">
+            </label>
+
+        </form>
+        <button id="show-btn" class="show-result-btn">Show vehicles</button>
+
+    </div>
+
+    <script src="search.js"></script>
+</body>
+
+</html>
