@@ -89,8 +89,8 @@ $(document).ready(function () {
   $('#make').select2();
   $('#model').select2();
   $('#generation').select2();
-  $('#from').select2({ data: withEmptyOption(generateYearsOptions(), 'From') });
-  $('#to').select2({ data: withEmptyOption(generateYearsOptions(), 'To') });
+  $('#from').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), 'From') });
+  $('#to').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), 'To') });
   $.get(API.automobile, onLoad);
 });
 
@@ -343,7 +343,11 @@ function showResults(filters) {
 
   let res = getSearchResultCount(filters);
 
-  $('#show-btn').text(`Show ${res} vehicles`);
+  if ((filters.make && filters.model) || (filters.make && res < 100)) {
+    $('#show-btn').text(`Show ${res} vehicles`);
+  } else {
+    $('#show-btn').text(`Show vehicles`);
+  }
 }
 
 $('#show-btn').click((e) => {
