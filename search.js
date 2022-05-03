@@ -251,6 +251,13 @@ $('#search').on('input', ({ target: { value } }) => {
 
   const isFormDisabled = !!value;
 
+  if (isFormDisabled) {
+    $('#copart').prop('checked', true);
+    activeFilters.copart = true;
+    $('#iaai').prop('checked', true);
+    activeFilters.iaai = true;
+  }
+
   if (isValidSearchQuery(value)) {
     getSearchResult(value, LANG);
   }
@@ -261,6 +268,8 @@ $('#search').on('input', ({ target: { value } }) => {
   $('#from').prop('disabled', isFormDisabled);
   $('#to').prop('disabled', isFormDisabled);
   $('#show-btn').prop('disabled', isFormDisabled);
+  $('#iaai').prop('disabled', isFormDisabled);
+  $('#copart').prop('disabled', isFormDisabled);
 });
 
 function resetFormValues() {
