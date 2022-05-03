@@ -392,9 +392,9 @@ $('#show-btn').click((e) => {
   let query = '';
 
   query += type && '&type=' + type.charAt(0).toUpperCase() + type.slice(1);
-  query += make ? '&make=' + make : '';
-  query += model ? '&model=' + model : '';
-  query += generation ? '&generation=' + generation : '';
+  query += '&make=' + (make || 'All');
+  query += '&model=' + (model || 'All');
+  query += '&generation=' + (generation || 'All');
   query += from ? '&year-from=' + from : '';
   query += to ? '&year-to=' + to : '';
 
