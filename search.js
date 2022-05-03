@@ -1,3 +1,5 @@
+const LANG = 'en';
+
 const API = {
   search: (lang = 'en', query = '') => `https://bid.cars/app/search/${lang}/vin-lot/${query}/true`,
   searchResult: (query = '') =>
@@ -42,9 +44,9 @@ const API_ARCHIVED = {
   truck: 'https://bid.cars/app/search/archived/toolbar-type/truck',
 };
 
-const getSearchResult = debounce((query) => {
+const getSearchResult = debounce((query, lang) => {
   const api = activeFilters.archived ? API_ARCHIVED : API;
-  $.get(api.search('en', query), (data) => {
+  $.get(api.search(lang, query), (data) => {
     const { results, url = '' } = JSON.parse(data);
     $('#show-btn').text(`Show ${results} vehicles`);
     activeFilters.searchResult = url;
@@ -250,7 +252,7 @@ $('#search').on('input', ({ target: { value } }) => {
   const isFormDisabled = !!value;
 
   if (isValidSearchQuery(value)) {
-    getSearchResult(value);
+    getSearchResult(value, LANG);
   }
 
   $('#make').prop('disabled', isFormDisabled);
