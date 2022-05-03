@@ -3,8 +3,8 @@ const LANG = 'en';
 const API = {
   search: (lang = 'en', query = '') => `https://bid.cars/app/search/${lang}/vin-lot/${query}/true`,
   searchResult: (query = '') =>
-    `https://bid.cars/en/search/results?search-type=typing&query=${query}&auction-type=All&year-from=1900&year-to=2023`,
-  root: 'https://bid.cars/en/search/results?search-type=filters',
+    `https://bid.cars/${LANG}/search/results?search-type=typing&query=${query}&auction-type=All&year-from=1900&year-to=2023`,
+  root: `https://bid.cars/${LANG}/search/results?search-type=filters`,
   automobile: 'https://bid.cars/app/search/toolbar-type/automobile',
   motorcycle: 'https://bid.cars/app/search/toolbar-type/motorcycle',
   atv: 'https://bid.cars/app/search/toolbar-type/atv',
@@ -25,8 +25,8 @@ const API = {
 const API_ARCHIVED = {
   search: (lang = 'en', query = '') => `https://bid.cars/app/search/${lang}/vin-lot/${query}/true`,
   searchResult: (query = '') =>
-    `https://bid.cars/en/search/results?search-type=typing&query=${query}&auction-type=All&year-from=1900&year-to=2023`,
-  root: 'https://bid.cars/en/search/archived/results?search-type=filters',
+    `https://bid.cars/${LANG}/search/results?search-type=typing&query=${query}&auction-type=All&year-from=1900&year-to=2023`,
+  root: `https://bid.cars/${LANG}/search/archived/results?search-type=filters`,
   automobile: 'https://bid.cars/app/search/archived/toolbar-type/automobile',
   motorcycle: 'https://bid.cars/app/search/archived/toolbar-type/motorcycle',
   atv: 'https://bid.cars/app/search/archived/toolbar-type/atv',
