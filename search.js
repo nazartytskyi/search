@@ -1,4 +1,14 @@
 const LANG = 'en';
+const localization = {
+  en: [
+    { word: 'Previous', translate: 'Previous translated EN' },
+    { word: 'Previous 1', translate: 'Previous translated EN 1' },
+  ],
+  pl: [
+    { word: 'Previous', translate: 'Previous translated PL' },
+    { word: 'Previous 1', translate: 'Previous translated EN 1' },
+  ],
+};
 
 const API = {
   search: (lang = 'en', query = '') => `https://bid.cars/app/search/${lang}/vin-lot/${query}/true`,
@@ -43,8 +53,6 @@ const API_ARCHIVED = {
   bus: 'https://bid.cars/app/search/archived/toolbar-type/bus',
   truck: 'https://bid.cars/app/search/archived/toolbar-type/truck',
 };
-
-
 
 let notArchivedData = {};
 let data = {};
@@ -115,6 +123,18 @@ function onLoad(response) {
   initMake(values);
 }
 
+function localizeData(data, local = localization, lang = LANG) {
+  return data.map(({ text, ...rest }) => {
+    const translation = local?.[lang]?.find((item) => item.word === text.trim())?.translate || '';
+
+    if (translation) {
+      return { ...rest, text: translation };
+    }
+
+    return { ...rest, text };
+  });
+}
+
 function initMake(values) {
   $('#make').empty();
   $('#make').select2({ data: withEmptyOption(values, 'Make', 'All makes') });
@@ -179,7 +199,7 @@ $('#model').on('select2:select', ({ target: { value } }) => {
     },
     templateResult: ({ text, maxYear, minYear }) =>
       `${text} ${minYear && maxYear ? `<span>(${minYear} - ${maxYear})</span>` : ''}`,
-    data: withEmptyOption(generationsData || [], 'Generation', 'All generations'),
+    data: withEmptyOption(localizeData(generationsData || []), 'Generation', 'All generations'),
   });
   showResults(activeFilters);
 });
