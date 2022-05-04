@@ -79,7 +79,7 @@ function withEmptyOption(options, text = '', all = '') {
 }
 
 function generateYearsOptions(from = 1900) {
-  const to = new Date().getFullYear();
+  const to = new Date().getFullYear() + 1;
   const data = [];
 
   for (let i = to; i > from; i--) {
@@ -158,7 +158,7 @@ $('#model').on('select2:select', ({ target: { value } }) => {
   activeFilters.model = value;
 
   const { generations = [] } = data[activeFilters.make]?.find(({ model }) => model === value) || {};
-  const generationsData = generations.map(({ name, max_year, min_year }) => ({
+  const generationsData = generations?.map(({ name, max_year, min_year }) => ({
     id: name,
     text: name,
     maxYear: max_year,
@@ -179,7 +179,7 @@ $('#model').on('select2:select', ({ target: { value } }) => {
     },
     templateResult: ({ text, maxYear, minYear }) =>
       `${text} ${minYear && maxYear ? `<span>(${minYear} - ${maxYear})</span>` : ''}`,
-    data: withEmptyOption(generationsData, 'Generation', 'All generations'),
+    data: withEmptyOption(generationsData || [], 'Generation', 'All generations'),
   });
   showResults(activeFilters);
 });
