@@ -102,7 +102,7 @@ $(document).ready(function () {
   $('#make').select2();
   $('#model').select2();
   $('#generation').select2();
-  $('#from').select2({ data: withEmptyOption(generateYearsOptions(), '', 'From') });
+  $('#from').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), '', 'From') });
   $('#to').select2({ minimumResultsForSearch: -1, data: withEmptyOption(generateYearsOptions(), '', 'To') });
   $.get(API.automobile, onLoad);
 });
@@ -253,7 +253,7 @@ $('#copart').on('input', ({ target }) => {
 });
 
 $(document).on('select2:open', (e) => {
-  if (e.target.name === 'make') {
+  if (e.target.name === 'make' || e.target.name === 'model') {
     setTimeout(() => document.querySelector('.select2-search__field').focus(), 200);
   }
 });
