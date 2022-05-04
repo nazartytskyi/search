@@ -254,7 +254,9 @@ $('#copart').on('input', ({ target }) => {
 
 $(document).on('select2:open', (e) => {
   if (e.target.name === 'make' || e.target.name === 'model') {
-    setTimeout(() => document.querySelector('.select2-search__field').focus(), 200);
+    if (window.innerWidth > 768) {
+      setTimeout(() => document.querySelector('.select2-search__field').focus(), 200);
+    }
   }
 });
 
