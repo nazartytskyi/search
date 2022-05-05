@@ -258,6 +258,9 @@ $(document).on('select2:open', (e) => {
       setTimeout(() => document.querySelector('.select2-search__field').focus(), 200);
     }
   }
+  if (e.target.name === 'from' || e.target.name === 'to') {
+    setTimeout(() => $('.select2-results__options .select2-results__option:first-child').remove(), 0);
+  }
 });
 
 $('#archived').on('input', ({ target: { checked } }) => {
