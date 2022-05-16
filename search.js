@@ -107,7 +107,7 @@ $(document).ready(function () {
   $.get(API.automobile, onLoad);
 });
 
-function onLoad(response) {
+function parseResponse(response) {
   const res = response.push ? response : JSON.parse(response);
   const items = {};
 
@@ -118,9 +118,13 @@ function onLoad(response) {
     items[item.make].push(item);
   });
 
-  data = items;
+  return items;
+}
 
-  const values = Object.keys(items).map((name) => ({ id: name, text: name }));
+function onLoad(response) {
+  data = parseResponse(response);
+
+  const values = Object.keys(data).map((name) => ({ id: name, text: name }));
   initMake(values);
 }
 
@@ -276,6 +280,13 @@ $('#archived').on('input', ({ target: { checked } }) => {
     getSearchResult(activeFilters.search, LANG);
   }
 
+  const api = checked ? API_ARCHIVED : API;
+
+  $.get(api[activeFilters.type], (res) => {
+    data = parseResponse(res);
+    showResults(activeFilters);
+  });
+
   showResults(activeFilters);
 });
 
@@ -333,6 +344,9 @@ function resetFormValues() {
   activeFilters.iaai = true;
 
   $('#search').val('');
+
+  $('#archived').prop('checked', false);
+  activeFilters.archived = false;
 
   activeFilters.search = '';
 }
