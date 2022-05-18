@@ -284,6 +284,11 @@ $('#archived').on('input', ({ target: { checked } }) => {
 
   $.get(api[activeFilters.type], (res) => {
     data = parseResponse(res);
+
+    if (checked) {
+      reinitWithActiveFilters(activeFilters);
+    }
+
     showResults(activeFilters);
   });
 
@@ -493,4 +498,16 @@ function isValidSearchQuery(query = '') {
   }
 
   return false;
+}
+
+function reinitWithActiveFilters(activeFilters) {
+  const filtersCopy = { ...activeFilters };
+  $('#make').empty();
+  const values = Object.keys(data).map((name) => ({ id: name, text: name }));
+
+  $('#make').select2({ data: withEmptyOption(values, 'Make', 'All makes') });
+
+  $('#make').val(activeFilters.make).trigger('change').trigger('select2:select');
+  $('#model').val(filtersCopy.model).trigger('change').trigger('select2:select');
+  $('#generation').val(filtersCopy.generation).trigger('change').trigger('select2:select');
 }
